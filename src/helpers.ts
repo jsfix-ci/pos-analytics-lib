@@ -25,7 +25,10 @@ export function getCurrentClockTime() {
 export async function fetchJson(url: string) {
   return retry(
     async () => {
-      const response = await fetch(url, { timeout: 5000 });
+      const response = await /* TODO: JSFIX could not patch the breaking change:
+      The timeout option was removed
+      Suggested fix: Use timeout-signal as a workaround: https://github.com/node-fetch/node-fetch/blob/main/docs/v3-UPGRADE-GUIDE.md#the-timeout-option-was-removed*/
+      fetch(url, { timeout: 5000 });
       if (response.ok && String(response.headers.get('content-type')).toLowerCase().includes('application/json')) {
         try {
           const res = await response.json();
